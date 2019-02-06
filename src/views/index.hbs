@@ -1,0 +1,15 @@
+<div class="row">
+    {{#each products}}
+    <div class="col-md-3">
+        <div class="card">
+            <img class="card-img-top" src="{{imagePath}}" alt="{{name}}">
+            <div class="card-body">
+                <h5 class="card-title">{{name}}</h5>
+                <p class="card-text">{{description}}</p>
+                <p>Price: {{price}}$</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-guitar-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cloudinary": "^1.13.2",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "fs-extra": "^7.0.1",
+    "mongoose": "^5.4.7",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node src",
+    "dev": "cross-env NODE_ENV=development nodemon src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

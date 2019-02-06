@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-4 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <form action="/admin/products/add" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Product Name" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="price" class="form-control" placeholder="Product Price">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" placeholder="Product Description"></textarea>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" name="image" class="custom-file-input" id="inputFileImage"
+                                aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputFileImage">Choose Image</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-block">
+                        <i class="far fa-save"></i> Save Product
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <img src="/images/no-image.png" id="previewImage" class="img-thumbnail">
+    </div>
+</div>
+
+<script>
+    document.getElementById('inputFileImage')
+        .addEventListener('change', e => {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('previewImage')
+                        .setAttribute('src', e.target.result);
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+</script>
