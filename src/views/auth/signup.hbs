@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h1>SignUp</h1>
+        {{#if messages}}
+        <div class="alert alert-danger">
+            {{#each messages }}
+                {{this}}
+            {{/each}}
+        </div>
+        {{/if}}
+
+        <form action="/user/signup" method="POST">
+            <div class="form-group">
+                <input type="text" name="email" class="form-control" placeholder="Email" autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <!-- CSRF -->
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button type="submit">
+                SignUp
+            </button>
+        </form>
+    </div>
+</div>
