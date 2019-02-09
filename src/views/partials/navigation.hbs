@@ -7,17 +7,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/signup">SignUp</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/signin">SignIn</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    User
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {{#if isAuthenticated}}
+                        <a class="dropdown-item" href="/user/profile">Profile</a>
+                        <a class="dropdown-item" href="/user/logout">Logout</a>
+                        {{else}}
+                        <a class="dropdown-item" href="/auth/signup">SingUp</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/auth/signin">SignIn</a>
+                        {{/if}}
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/products/add">New Product</a>

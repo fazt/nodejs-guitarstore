@@ -2,14 +2,17 @@
     <div class="col-md-4 offset-md-4">
         <h1>SignUp</h1>
         {{#if messages}}
-        <div class="alert alert-danger">
-            {{#each messages }}
-                {{this}}
-            {{/each}}
+        {{#each messages }}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{this}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        {{/each}}
         {{/if}}
 
-        <form action="/user/signup" method="POST">
+        <form action="/auth/signup" method="POST">
             <div class="form-group">
                 <input type="text" name="email" class="form-control" placeholder="Email" autofocus>
             </div>

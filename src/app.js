@@ -42,11 +42,14 @@ app.use(passport.session());
 // global variables
 app.use((req, res, next) => {
     app.locals.messages = req.flash('error');
+    app.locals.isAuthenticated = req.isAuthenticated();
     next();
 });
 
 // Store Routes
 app.use('/', require('./routes')); // routes/index.js
+app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/user'));
 
 // Admin Routes
 app.use('/admin', require('./routes/admin'));
