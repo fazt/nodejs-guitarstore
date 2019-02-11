@@ -16,26 +16,37 @@ indexCtrl.renderNewProductForm = (req, res) => {
 };
 
 indexCtrl.saveNewProduct = async (req, res) => {
-    // Receive Frontend Data
-    const { name, price, description } = req.body;
-    // Uploaded Image Information
-    const imagePath = req.file.path;
-    // Uploaded Image Information from Cloudinary
-    const result = await cloudinary.v2.uploader.upload(imagePath);
-    // Creating a new Product Document for Mongodb
-    const newProduct = new Product({ name, price, description, imagePath: result.url });
-    // Saving the newProduct to the database
-    await newProduct.save();
-    // Deleting the Image from our Server
-    await fs.unlink(imagePath);
-    // Send Response to the Client
-    res.send('saving');
+    try {
+        // Receive Frontend Data
+        const { name, price, description } = req.body;
+        // Uploaded Image Information
+        const imagePath = req.file.path;
+        // Uploaded Image Information from Cloudinary
+        const result = await cloudinary.v2.uploader.upload(imagePath);
+        // Creating a new Product Document for Mongodb
+        const newProduct = new Product({ name, price, description, imagePath: result.url });
+        // Saving the newProduct to the database
+        await newProduct.save();
+        // Deleting the Image from our Server
+        await fs.unlink(imagePath);
+        // Send Response to the Client
+        res.send('saving');
+    }
+    catch (e) {
+        console.log(e)
+    }
 };
 
 indexCtrl.renderProducts = async (req, res) => {
     const products = await Product.find();
-    res.render('admin/products/list', {products});
-    console.log(products)
+    res.render('admin/products/list', { products });
+};
+
+indexCtrl.deleteProduct = async (req, res) => {
+    const { productId } = req.params;
+    console.log(productId)
+    await Product.findByIdAndDelete(productId);
+    res.redirect('/admin/products');
 };
 
 module.exports = indexCtrl;

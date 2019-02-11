@@ -10,7 +10,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    User
+                        User
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {{#if isAuthenticated}}
@@ -28,6 +28,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/products">List of Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary text-white" href="/cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        List of Products <span class="badge badge-light">
+                            {{session.cart.totalQuantity}}
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>

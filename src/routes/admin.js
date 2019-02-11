@@ -13,4 +13,7 @@ router.route('/products/add')
 router.route('/products')
     .get(indexController.renderProducts)
 
+router.route('/products/:productId/delete')
+    .get(indexController.deleteProduct);
+
 module.exports = router;

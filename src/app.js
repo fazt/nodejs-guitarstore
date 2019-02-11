@@ -6,10 +6,11 @@ const multer = require('multer');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
 
 // Initializations
 const app = express();
-require('./database');
+const mongoose = require('./database');
 require('./config/passport');
 
 // settings
@@ -19,7 +20,8 @@ app.engine('.hbs', exphbs({
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: require('./libs/helpers')
 }));
 app.set('view engine', '.hbs');
 
@@ -34,7 +36,13 @@ const storage = multer.diskStorage({
     }
 });
 app.use(multer({ storage }).single('image'));
-app.use(session({ secret: 'mysecretsessionforthiswebsite', resave: false, saveUninitialized: false }));
+app.use(session({
+    secret: 'mysecretsessionforthiswebsite',
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({mongooseConnection: mongoose.connection}),
+    cookie: { maxAge: 60 * 60 * 24 * 7}
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -42,7 +50,9 @@ app.use(passport.session());
 // global variables
 app.use((req, res, next) => {
     app.locals.messages = req.flash('error');
+    app.locals.successMessages = req.flash('success');
     app.locals.isAuthenticated = req.isAuthenticated();
+    app.locals.session = req.session;
     next();
 });
 
