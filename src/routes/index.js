@@ -6,6 +6,8 @@ const Cart = require('../models/Cart');
 const Order = require('../models/Order');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+const { isLoggedIn } = require('../libs/auth');
+
 // Routes
 router.get('/', async (req, res) => {
     const products = await Product.find();
@@ -25,7 +27,23 @@ router.get('/cart/add/:productId', async (req, res) => {
     res.redirect('/');
 });
 
-router.get('/cart', (req, res) => {
+router.get('/cart/reduce/:id', (req, res, next) => {
+    const { id } = req.params;
+    const cart = new Cart(req.session.cart ? req.session.cart : {});
+    cart.reduceByOne(id);
+    req.session.cart = cart;
+    res.redirect('/cart');
+});
+
+router.get('/cart/remove/:id', (req, res, next) => {
+    const { id } = req.params;
+    const cart = new Cart(req.session.cart ? req.session.cart : {});
+    cart.removeItem(id);
+    req.session.cart = cart;
+    res.redirect('/cart');
+});
+
+router.get('/cart', isLoggedIn, (req, res) => {
     let products = [];
     let cart = {};
 
@@ -38,7 +56,7 @@ router.get('/cart', (req, res) => {
     res.render('cart/list', { products, totalPrice: cart.totalPrice })
 });
 
-router.post('/checkout', async (req, res, next) => {
+router.post('/checkout', isLoggedIn, async (req, res, next) => {
     if (!req.session.cart) {
         return res.redirect('/cart');
     }
@@ -55,7 +73,7 @@ router.post('/checkout', async (req, res, next) => {
             req.flash('error', err.message);
             return res.redirect('/cart');
         }
-        const order = new Order({ 
+        const order = new Order({
             user: req.user,
             cart,
             address: req.body.address,

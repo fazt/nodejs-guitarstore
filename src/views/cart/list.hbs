@@ -14,8 +14,8 @@
                         Dropdown
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">Reduce by One</a>
-                        <a class="dropdown-item" href="#">Remove All</a>
+                        <a class="dropdown-item" href="/cart/reduce/{{this.item._id}}">Reduce by One</a>
+                        <a class="dropdown-item" href="/cart/remove/{{this.item._id}}">Remove All</a>
                     </div>
                 </div>
             </li>
@@ -42,7 +42,7 @@
     <input type="text" name="address" placeholder="Address">
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="pk_test_taBi1vb2iiJysIusTU4Ia2Yu" data-amount="{{fromCentsToDollars totalPrice}}" data-name="Fazt" data-description="Example charge"
-        data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto">
+        data-image="/images/guitar-store-logo.png" data-locale="auto">
         </script>
 </form>
 {{/unless}}

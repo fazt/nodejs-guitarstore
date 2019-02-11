@@ -20,10 +20,16 @@ router.post('/signup', [
     check('email').not().isEmpty().isEmail().withMessage('Invalid Email'),
     check('password').isLength({ min: 4 }).withMessage('Invalid Password')
 ], passport.authenticate('local-signup', {
-    successRedirect: '/user/profile',
     failureRedirect: '/auth/signup',
     failureFlash: true
-}));
+}), (req, res) => {
+    if (req.session.previousURL) {
+        const previousURL = req.session.previousURL;
+        delete req.session.previousURL;
+        return res.redirect(previousURL);
+    }
+    res.redirect('/user/profile')
+});
 
 router.get('/signin', (req, res, next) => {
     res.render('auth/signin', {
@@ -35,9 +41,15 @@ router.post('/signin', [
     check('email').not().isEmpty().isEmail().withMessage('Invalid Email'),
     check('password').isLength({ min: 4 }).withMessage('Invalid Password')
 ], passport.authenticate('local-signin', {
-    successRedirect: '/user/profile',
     failureRedirect: '/auth/signin',
     failureFlash: true
-}));
+}), (req, res) => {
+    if (req.session.previousURL) {
+        const previousURL = req.session.previousURL;
+        delete req.session.previousURL;
+        return res.redirect(previousURL);
+    }
+    res.redirect('/user/profile')
+});
 
 module.exports = router;

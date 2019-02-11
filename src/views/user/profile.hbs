@@ -1,1 +1,20 @@
 <h1>Profile</h1>
+
+{{#each orders}}
+<div class="card">
+    <div class="card-body">
+        {{#each items}}
+        <ul class="list-group">
+            <li class="list-group-item">
+                {{item.name}} <span>{{item.price}}</span> | {{quantity}}
+            </li>
+        </ul>
+        {{/each}}
+    </div>
+    <div class="card-footer">
+        Total: {{cart.totalPrice}}
+    </div>
+</div>
+{{else}}
+<p>No Orders yet.</p>
+{{/each}}
