@@ -40,8 +40,8 @@ app.use(session({
     secret: 'mysecretsessionforthiswebsite',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({mongooseConnection: mongoose.connection}),
-    cookie: { maxAge: 60 * 60 * 24 * 7}
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 60 * 60 * 24 * 7 }
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -53,6 +53,7 @@ app.use((req, res, next) => {
     app.locals.successMessages = req.flash('success');
     app.locals.isAuthenticated = req.isAuthenticated();
     app.locals.session = req.session;
+    app.locals.user = req.user || null;
     next();
 });
 
@@ -60,11 +61,17 @@ app.use((req, res, next) => {
 app.use('/', require('./routes')); // routes/index.js
 app.use('/auth', require('./routes/auth'));
 app.use('/user', require('./routes/user'));
+app.use('/cart', require('./routes/cart'));
 
 // Admin Routes
 app.use('/admin', require('./routes/admin'));
 
 // static files
 app.use(express.static(path.join(path.join(__dirname, 'public'))));
+
+// 404 Handler
+app.get('*', function (req, res) {
+    res.status(404).render('404');
+});
 
 module.exports = app;

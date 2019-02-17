@@ -2,8 +2,7 @@ const router = require('express').Router();
 
 // Controllers
 const indexController = require('../controllers/index.controller');
-
-// /admin
+const { isAdmin } = require('../libs/roles');
 
 // Routes To Save a new Product
 router.route('/products/add')
@@ -11,6 +10,7 @@ router.route('/products/add')
     .post(indexController.saveNewProduct);
 
 router.route('/products')
+    .all(isAdmin)
     .get(indexController.renderProducts)
 
 router.route('/products/:productId/delete')

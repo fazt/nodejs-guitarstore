@@ -1,15 +1,21 @@
-<div class="row">
-    {{#each products}}
-    <div class="col-md-3">
-        <div class="card">
-            <img class="card-img-top" src="{{imagePath}}" alt="{{name}}">
-            <div class="card-body">
-                <h5 class="card-title">{{name}}</h5>
-                <p class="card-text">{{description}}</p>
-                <p>Price: {{price}}$</p>
-                <a href="/cart/add/{{_id}}" class="btn btn-primary">Go somewhere</a>
+<main>
+    <div class="container p-4">
+        <div class="row">
+            {{#each products}}
+            <div class="col-md-3">
+                <div class="card animated fadeInUp">
+                    <img class="card-img-top" src="{{imagePath}}" alt="{{name}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">{{description}}</p>
+                        <p>Price: {{price}}$</p>
+                        <a href="/cart/add/{{_id}}" class="btn btn-primary btn-block">
+                            <i class="fas fa-shopping-cart"></i> Buy
+                        </a>
+                    </div>
+                </div>
             </div>
+            {{/each}}
         </div>
     </div>
-    {{/each}}
-</div>
+</main>

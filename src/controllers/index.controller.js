@@ -30,7 +30,7 @@ indexCtrl.saveNewProduct = async (req, res) => {
         // Deleting the Image from our Server
         await fs.unlink(imagePath);
         // Send Response to the Client
-        res.send('saving');
+        res.redirect('/');
     }
     catch (e) {
         console.log(e)

@@ -1,48 +1,62 @@
-{{#if products}}
+<div class="container p-4">
 
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <ul class="list-group">
-            {{#each products}}
-            <li class="list-group-item">
-                <span class="badge badge-primary">{{this.quantity}}</span>
-                <strong>{{this.item.name}}</strong>
-                <span class="label label-success">${{this.item.price}}</span>
-                <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="/cart/reduce/{{this.item._id}}">Reduce by One</a>
-                        <a class="dropdown-item" href="/cart/remove/{{this.item._id}}">Remove All</a>
+    <div class="row">
+        {{#if products}}
+        <div class="col-md-8">
+            <ul class="list-group">
+                {{#each products}}
+                <li class="list-group-item">
+                    <span class="badge badge-primary">{{this.quantity}}</span>
+                    <strong>{{this.item.name}}</strong>
+                    <span class="label label-success">${{this.item.price}}</span>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="/cart/reduce/{{this.item._id}}">Reduce by One</a>
+                            <a class="dropdown-item" href="/cart/remove/{{this.item._id}}">Remove All</a>
+                        </div>
                     </div>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-md-4">
+
+            <form action="/cart/checkout" method="POST" class="card card-body">
+                <div class="form-group">
+                    <input type="text" name="firstname" placeholder="Name" class="form-control">
                 </div>
-            </li>
-            {{/each}}
-        </ul>
+                <div class="form-group">
+                    <input type="text" name="lastname" placeholder="Name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="address" placeholder="Address" class="form-control">
+                </div>
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_taBi1vb2iiJysIusTU4Ia2Yu" data-amount="{{fromCentsToDollars totalPrice}}"
+                    data-name="Fazt" data-description="Example charge" data-image="/images/guitar-store-logo.png"
+                    data-locale="auto">
+                    </script>
+            </form>
+
+            <div class="card card-body mt-3">
+                <strong>TOtal:$ {{totalPrice}} </strong>
+            </div>
+        </div>
+        {{else}}
+
+        <div class="col-md-4 offset-md-4">
+            <div class="card card-body">
+                <p>No items in cart</p>
+                <a href="/" class="btn btn-primary">
+                    Buy some products before
+                </a>
+            </div>
+        </div>
+        {{/if}}
     </div>
+
 </div>
-
-<strong>TOtal:$ {{totalPrice}} </strong>
-<hr>
-
-{{else}}
-<p>No items in cart</p>
-{{/if}}
-
-{{#unless products}}
-<a href="/" class="btn btn-primary">
-    Buy some products before
-</a>
-{{else}}
-<form action="/checkout" method="POST">
-    <input type="text" name="firstname" placeholder="Name">
-    <input type="text" name="lastname" placeholder="Name">
-    <input type="text" name="address" placeholder="Address">
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="pk_test_taBi1vb2iiJysIusTU4Ia2Yu" data-amount="{{fromCentsToDollars totalPrice}}" data-name="Fazt" data-description="Example charge"
-        data-image="/images/guitar-store-logo.png" data-locale="auto">
-        </script>
-</form>
-{{/unless}}

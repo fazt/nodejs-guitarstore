@@ -1,25 +1,33 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>ImageURL</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each products}}
-        <tr>
-            <td>{{name}}</td>
-            <td>{{price}}</td>
-            <td>{{description}}</td>
-            <td>{{imagePath}}</td>
-            <td>
-                <a href="/admin/products/{{_id}}/delete" class="btn btn-danger">Delete</a>
-                <a href="">Edit</a>
-            </td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <table class="table table-bordered bg-white">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>ImageURL</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each products}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{price}}</td>
+                        <td>{{description}}</td>
+                        <td>
+                            <a href="{{imagePath}}" target="_blank">Visit Image</a>
+                        </td>
+                        <td>
+                            <a href="/admin/products/{{_id}}/delete" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

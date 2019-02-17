@@ -1,29 +1,43 @@
-<div class="row">
-        <div class="col-md-4 offset-md-4">
-            <h1>SignIn</h1>
-            {{#if messages}}
-            {{#each messages }}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{this}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<main class="auth-page animated fadeInUp">
+    <div class="container p-4 h-100">
+
+        <div class="row">
+            <div class="col-md-4 offset-md-7">
+                {{#if messages}}
+                {{#each messages }}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{this}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {{/each}}
+                {{/if}}
+
+                <!-- SIGIN FORM -->
+                <div class="card mt-4">
+                    <div class="card-header bg-dark text-white">
+                        <h1 class="h4">SignIn</h1>
+                    </div>
+                    <div class="card-body">
+                        <form action="/auth/signin" method="POST">
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="text" name="email" class="form-control" placeholder="name@company.com" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Password</label>
+                                <input type="password" name="password" class="form-control" placeholder="Type your Password">
+                            </div>
+                            <!-- CSRF -->
+                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                SignIn
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            {{/each}}
-            {{/if}}
-    
-            <form action="/auth/signin" method="POST">
-                <div class="form-group">
-                    <input type="text" name="email" class="form-control" placeholder="Email" autofocus>
-                </div>
-                <div class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                </div>
-                <!-- CSRF -->
-                <input type="hidden" name="_csrf" value="{{csrfToken}}">
-                <button type="submit">
-                    SignIn
-                </button>
-            </form>
         </div>
     </div>
+</main>

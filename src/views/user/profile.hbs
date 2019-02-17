@@ -1,20 +1,37 @@
-<h1>Profile</h1>
+<div class="container p-4">
+    <div class="row">
 
-{{#each orders}}
-<div class="card">
-    <div class="card-body">
-        {{#each items}}
-        <ul class="list-group">
-            <li class="list-group-item">
-                {{item.name}} <span>{{item.price}}</span> | {{quantity}}
-            </li>
-        </ul>
-        {{/each}}
-    </div>
-    <div class="card-footer">
-        Total: {{cart.totalPrice}}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Profile</h1>
+                </div>
+                <div class="card-body">
+                    <p>Email: {{user.email}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <h3>Orders</h3>
+            {{#each orders}}
+            <div class="card">
+                <div class="card-body">
+                    {{#each items}}
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            {{item.name}} <span>{{item.price}}</span> | {{quantity}}
+                        </li>
+                    </ul>
+                    {{/each}}
+                </div>
+                <div class="card-footer">
+                    Total: {{cart.totalPrice}}
+                </div>
+            </div>
+            {{else}}
+            <p>No Orders yet.</p>
+            {{/each}}
+        </div>
     </div>
 </div>
-{{else}}
-<p>No Orders yet.</p>
-{{/each}}

@@ -10,34 +10,51 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                {{#if isAuthenticated}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        User
+                        Hello {{user.email}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{#if isAuthenticated}}
                         <a class="dropdown-item" href="/user/profile">Profile</a>
                         <a class="dropdown-item" href="/user/logout">Logout</a>
-                        {{else}}
-                        <a class="dropdown-item" href="/auth/signup">SingUp</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/auth/signin">SignIn</a>
-                        {{/if}}
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/products/add">New Product</a>
+                <!-- PRODUCTS -->
+                {{#ifCond user.role 'admin'}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/admin/products/add">New Product</a>
+                        <a class="dropdown-item" href="/admin/products">List of Products</a>
+                    </div>
                 </li>
+                {{/ifCond}}
+                {{else}}
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/products">List of Products</a>
+                    <a class="nav-link" href="/auth/signup">
+                        <i class="fas fa-user-plus"></i> SingUp
+                    </a>
                 </li>
+                <li class="nav-item mr-2">
+                    <a class="nav-link" href="/auth/signin">
+                        <i class="fas fa-sign-in-alt"></i> SignIn
+                    </a>
+                </li>
+                {{/if}}
                 <li class="nav-item">
                     <a class="btn btn-primary text-white" href="/cart">
                         <i class="fas fa-shopping-cart"></i>
-                        List of Products <span class="badge badge-light">
+                        List of Products
+                        {{#if session.cart.totalQuantity}}
+                        <span class="badge badge-light">
                             {{session.cart.totalQuantity}}
                         </span>
+                        {{/if}}
                     </a>
                 </li>
             </ul>

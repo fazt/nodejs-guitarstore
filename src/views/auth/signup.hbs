@@ -1,29 +1,45 @@
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <h1>SignUp</h1>
-        {{#if messages}}
-        {{#each messages }}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{this}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {{/each}}
-        {{/if}}
+<main class="auth-page animated fadeIn">
 
-        <form action="/auth/signup" method="POST">
-            <div class="form-group">
-                <input type="text" name="email" class="form-control" placeholder="Email" autofocus>
+    <div class="container p-4 h-100">
+
+        <div class="row">
+            <div class="col-md-4 offset-md-7">
+                {{#if messages}}
+                {{#each messages }}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{this}}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {{/each}}
+                {{/if}}
+
+                <!-- SIGN UP FORM -->
+                <div class="card mt-4">
+                    <h1 class="card-header h4 bg-dark text-white">SignUp</h1>
+                    <div class="card-body">
+                        <form action="/auth/signup" method="POST">
+                            <div class="form-group">
+                                <label for="">Email: </label>
+                                <input type="text" name="email" class="form-control" placeholder="email@company.com"
+                                    autofocus>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Password</label>
+                                <input type="password" name="password" class="form-control"
+                                    placeholder="Type your Password">
+                            </div>
+                            <!-- CSRF -->
+                            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                SignUp
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="Password">
-            </div>
-            <!-- CSRF -->
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-            <button type="submit">
-                SignUp
-            </button>
-        </form>
+        </div>
     </div>
-</div>
+
+</main>
