@@ -14,7 +14,7 @@ const mongoose = require('./database');
 require('./config/passport');
 
 // settings
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 4000);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
     layoutsDir: path.join(app.get('views'), 'layouts'),
@@ -40,7 +40,7 @@ app.use(session({
     secret: 'mysecretsessionforthiswebsite',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({ mongooseConnection: mongoose.connection}),
     cookie: { maxAge: 60 * 60 * 24 * 7 }
 }));
 app.use(flash());

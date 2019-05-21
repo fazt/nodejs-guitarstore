@@ -4,16 +4,9 @@ const router = Router();
 const passport = require('passport');
 const { check } = require('express-validator/check');
 
-// Middlewares
-const csrf = require('csurf');
-const csrfProtection = csrf();
-router.use(csrfProtection);
-
 // Routes
 router.get('/signup', (req, res, next) => {
-    res.render('auth/signup', {
-        csrfToken: req.csrfToken()
-    });
+    res.render('auth/signup');
 });
 
 router.post('/signup', [
