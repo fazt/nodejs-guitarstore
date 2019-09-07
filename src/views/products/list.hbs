@@ -1,0 +1,25 @@
+<main>
+    <div class="container p-4">
+        <div class="row">
+            {{#if products}}
+                {{#each products}}
+                <div class="col-md-3">
+                    <div class="card animated fadeInUp">
+                        <img class="card-img-top" src="{{image.path}}" alt="{{name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="crop-text-5">{{description}}</p>
+                            <p>Price: {{price}}$</p>
+                            <a href="/product/{{uri}}" class="btn btn-primary btn-block">
+                                View More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            {{else}}
+                <h1>There are no products yet.</h1>
+            {{/if}}
+        </div>
+    </div>
+</main>

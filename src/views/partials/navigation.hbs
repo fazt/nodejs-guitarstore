@@ -18,10 +18,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/user/profile">Profile</a>
-                        <a class="dropdown-item" href="/user/logout">Logout</a>
+                        <a class="dropdown-item" href="/auth/logout">Logout</a>
                     </div>
                 </li>
-                <!-- PRODUCTS -->
+                <!-- ADMIN PRODUCTS -->
                 {{#ifCond user.role 'admin'}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -49,7 +49,7 @@
                 <li class="nav-item">
                     <a class="btn btn-primary text-white" href="/cart">
                         <i class="fas fa-shopping-cart"></i>
-                        List of Products
+                        My Cart
                         {{#if session.cart.totalQuantity}}
                         <span class="badge badge-light">
                             {{session.cart.totalQuantity}}

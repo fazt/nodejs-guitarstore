@@ -1,48 +1,38 @@
 const { Router } = require('express');
 const router = Router();
 
-const passport = require('passport');
-const { check } = require('express-validator/check');
+const authCtrl = require('../controllers/auth.controller');
+const validator = require('../config/validator');
+
+const csrf = require('csurf');
+
+router.use(csrf());
 
 // Routes
-router.get('/signup', (req, res, next) => {
-    res.render('auth/signup');
-});
+router.get('/signup', authCtrl.renderSignUpForm);
 
-router.post('/signup', [
-    check('email').not().isEmpty().isEmail().withMessage('Invalid Email'),
-    check('password').isLength({ min: 4 }).withMessage('Invalid Password')
-], passport.authenticate('local-signup', {
-    failureRedirect: '/auth/signup',
-    failureFlash: true
-}), (req, res) => {
+router.post('/signup', validator('signUp'), authCtrl.postSignUp, (req, res) => {
+    console.log('llego 3')
     if (req.session.previousURL) {
         const previousURL = req.session.previousURL;
         delete req.session.previousURL;
         return res.redirect(previousURL);
     }
     res.redirect('/user/profile')
-});
+ });
 
-router.get('/signin', (req, res, next) => {
-    res.render('auth/signin', {
-        csrfToken: req.csrfToken()
-    });
-});
+router.get('/signin',authCtrl.renderSignInForm);
 
-router.post('/signin', [
-    check('email').not().isEmpty().isEmail().withMessage('Invalid Email'),
-    check('password').isLength({ min: 4 }).withMessage('Invalid Password')
-], passport.authenticate('local-signin', {
-    failureRedirect: '/auth/signin',
-    failureFlash: true
-}), (req, res) => {
-    if (req.session.previousURL) {
-        const previousURL = req.session.previousURL;
-        delete req.session.previousURL;
-        return res.redirect(previousURL);
-    }
-    res.redirect('/user/profile')
-});
+router.post('/signin', validator('signIn'), authCtrl.postSignIn
+// ], authCtrl.postSignIn, (req, res) => {
+//     if (req.session.previousURL) {
+//         const previousURL = req.session.previousURL;
+//         delete req.session.previousURL;
+//         return res.redirect(previousURL);
+//     }
+//     res.redirect('/user/profile')
+);
+
+router.get('/logout', authCtrl.logout);
 
 module.exports = router;

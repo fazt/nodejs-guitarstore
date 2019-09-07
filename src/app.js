@@ -2,8 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const multer = require('multer');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
@@ -29,13 +29,7 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-const storage = multer.diskStorage({
-    destination: path.join(__dirname, 'public/uploads'),
-    filename: (req, file, cb) => {
-        cb(null, new Date().getTime() + path.extname(file.originalname));
-    }
-});
-app.use(multer({ storage }).single('image'));
+app.use(cookieParser());
 app.use(session({
     secret: 'mysecretsessionforthiswebsite',
     resave: false,
@@ -49,11 +43,11 @@ app.use(passport.session());
 
 // global variables
 app.use((req, res, next) => {
-    app.locals.messages = req.flash('error');
-    app.locals.successMessages = req.flash('success');
-    app.locals.isAuthenticated = req.isAuthenticated();
-    app.locals.session = req.session;
-    app.locals.user = req.user || null;
+    res.locals.messages = req.flash('error');
+    res.locals.successMessages = req.flash('success');
+    res.locals.isAuthenticated = req.isAuthenticated();
+    res.locals.session = req.session;
+    res.locals.user = req.user || null;
     next();
 });
 
@@ -70,8 +64,8 @@ app.use('/admin', require('./routes/admin'));
 app.use(express.static(path.join(path.join(__dirname, 'public'))));
 
 // 404 Handler
-app.get('*', function (req, res) {
-    res.status(404).render('404');
-});
+// app.get('*', function (req, res) {
+//     res.status(404).render('404');
+// });
 
 module.exports = app;

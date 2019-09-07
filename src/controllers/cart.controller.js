@@ -11,11 +11,15 @@ cartCtrl.addProduct = async (req, res) => {
     const cart = new Cart(req.session.cart);
     // Get Product's data
     const product = await Product.findById(productId);
-    cart.addItem(product, product._id);
-    // Save the Cart in session
-    req.session.cart = cart;
-    // Respond to the Client 
-    res.redirect('/');
+    if (product) {
+        cart.addItem(product, product._id);
+        // Save the Cart in session
+        req.session.cart = cart;
+        // Respond to the Client 
+        res.redirect('/');
+    }
+    req.flash('error', 'Product do not exists');
+    return res.redirect('/');
 };
 
 cartCtrl.reduceOneProduct = (req, res) => {
