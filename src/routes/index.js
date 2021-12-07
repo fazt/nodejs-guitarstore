@@ -1,11 +1,14 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 
 // Controller
-const productsController = require('../controllers/products.controller');
+const {
+  renderProduct,
+  renderProducts,
+} = require("../controllers/products.controller");
 
 // Routes
-router.get('/', productsController.renderProductsView);
-router.get('/product/:uri', productsController.renderProductPreview);
+router.get("/", renderProducts);
+router.get("/product/:uri", renderProduct);
 
 module.exports = router;

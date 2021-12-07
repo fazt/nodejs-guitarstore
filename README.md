@@ -1,10 +1,10 @@
-This project is under development right now. Probably this will be a tutorial for my Youtube Channel
+## Guitar Store App
 
-# Guitar Store App
 This is a webstore simple project using Node.js, Mongodb, Stripe, and other Javascript Technologies.
-![](docs/screenshot.png) 
+![](docs/screenshot.png)
 
 # Installation
+
 ```
 cd nodejs-guitarstore
 npm install
@@ -13,6 +13,7 @@ npm install
 Then create the following environment variables
 
 # Environment Variables
+
 - MONGODB_URI, this is the MongoDB URL. By default is "localhost/guitarstore".
 - PORT. The default port for your server. By Default is 4000
 - CLOUDINARY_CLOUD_NAME
@@ -21,7 +22,9 @@ Then create the following environment variables
 - STRIPE_SECRET_KEY
 
 # Start the project
+
 This projects have two environments Development and production. To start in development mode run:
+
 ```
 npm run dev
 ```
